@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 21st Birthday, Aditi (Ishaa)! ❤️</title>
+  
+  <!-- SEO & Social Meta -->
+  <meta name="description" content="A cinematic, emotional, interactive birthday surprise experience for Aditi (Ishaa) from Mani. To Billie from Billoute." />
+  <meta name="theme-color" content="#070514" />
+  <meta property="og:title" content="Happy 21st Birthday, Aditi (Ishaa)! ❤️" />
+  <meta property="og:description" content="A cinematic, interactive digital gift celebrating 21 years of an extraordinary best friend." />
+  <meta property="og:type" content="website" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
+
+  <!-- Google Fonts: Playfair Display (Serif), Outfit (Sans), Dancing Script (Script) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+
+  <!-- Fullscreen Interactive Canvas Backgrounds -->
+  <canvas id="starfield-canvas"></canvas>
+  <canvas id="celebration-canvas"></canvas>
+
+  <!-- ====================================================================
+       FIRST SCREEN: FULLSCREEN SURPRISE INTERFACE
+       ==================================================================== -->
+  <div id="intro-screen" class="intro-fullscreen">
+    <div class="intro-card glass-panel">
+      <div class="intro-icon">🎁✨</div>
+      <h1 id="intro-greeting" class="intro-greeting font-serif gradient-text-hero">Hey Aditi...</h1>
+      <p id="intro-subgreeting" class="intro-subgreeting">Turn your sound on & get ready for your surprise 🎧</p>
+      
+      <div class="intro-body">
+        <p id="intro-line-1" class="intro-fade-line is-visible">Today isn't just another day on the calendar.</p>
+        <p id="intro-line-2" class="intro-fade-line is-visible">Because 21 years ago today, someone truly irreplaceable entered this world.</p>
+        <p id="intro-line-3" class="intro-fade-line is-visible">Someone who brings unmatched kindness, endless laughs, and genuine warmth.</p>
+        <p id="intro-line-4" class="intro-fade-line is-visible">To Billie from Billoute — I made something special just for you.</p>
+      </div>
+
+      <h2 id="intro-highlight" class="intro-highlight font-serif gradient-text-gold is-visible">Happy 21st Birthday, Ishaa ❤️</h2>
+
+      <div class="intro-action-box">
+        <button id="open-surprise-btn" class="btn-open-surprise is-visible pulse-glow" aria-label="Open your birthday surprise">
+          <span id="open-surprise-btn-text">Open Your Surprise ✨</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       FLOATING AUDIO MINI-PLAYER — APNA BANA LE
+       ==================================================================== -->
+  <aside id="floating-music-player" class="floating-music-player hidden" aria-label="Audio controller">
+    <!-- Album Art Thumbnail -->
+    <div class="music-cover-wrapper" id="music-cover-toggle" title="Click to open/close Apna Bana Le player">
+      <img src="images/apna-bana-le-cover.jpg" alt="Apna Bana Le Album Art" class="music-cover-img" />
+    </div>
+
+    <!-- Play/Pause & Mute Buttons -->
+    <button id="music-toggle-btn" class="music-btn" aria-label="Play Apna Bana Le">▶</button>
+    <button id="music-mute-btn" class="music-btn" aria-label="Mute audio">🔊</button>
+    
+    <div class="music-track-info" id="music-info-toggle" style="cursor: pointer;" title="Click to view player">
+      <span class="music-label">Now Playing • Bhediya</span>
+      <span id="music-track-title" class="music-track-title">Apna Bana Le — Arijit Singh</span>
+    </div>
+
+    <div id="music-visualizer" class="music-visualizer" aria-hidden="true">
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+    </div>
+
+    <!-- Toggle Expanded Player -->
+    <button id="music-expand-btn" class="music-expand-btn" title="Expand Apna Bana Le Player" aria-label="Toggle Player">
+      ▲
+    </button>
+  </aside>
+
+  <!-- Expanded Music Sanctuary Popup (Spotify + YouTube Video) -->
+  <div id="music-expanded-panel" class="music-expanded-panel glass-panel hidden">
+    <div class="expanded-panel-header">
+      <div class="expanded-header-title">
+        <span class="spotify-badge">🎧 OFFICIAL TRACK • BHEDIYA</span>
+        <h4 style="color:#fff;font-size:1.05rem;margin-top:2px;">Apna Bana Le</h4>
+        <p style="font-size:0.8rem;color:var(--text-muted);">Arijit Singh, Sachin-Jigar • Dedicated to Ishaa by Mani</p>
+      </div>
+      <button id="close-expanded-panel-btn" class="modal-close-btn" style="position:static;width:30px;height:30px;font-size:0.85rem;" aria-label="Close panel">✕</button>
+    </div>
+
+    <div class="expanded-tabs">
+      <button id="tab-yt-btn" class="expanded-tab active">YouTube Audio/Video</button>
+      <button id="tab-spotify-btn" class="expanded-tab">Spotify Player</button>
+    </div>
+
+    <div id="expanded-yt-tab" class="expanded-tab-content active">
+      <div class="yt-embed-container">
+        <div id="yt-player"></div>
+      </div>
+    </div>
+
+    <div id="expanded-spotify-tab" class="expanded-tab-content" style="display:none;">
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/36N5awamOX6XX5pQn3aFXZ?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MAIN EXPERIENCE (UNLOCKED AFTER INTRO)
+       ==================================================================== -->
+  <main id="main-experience" class="hidden">
+
+    <!-- CHAPTER 1 & 2: HERO BIRTHDAY SHRINE -->
+    <section id="chapter-hero" class="chapter-section hero-wrapper">
+      <div class="container">
+        <div class="hero-main-card glass-panel scroll-reveal">
+          <span id="hero-badge" class="section-badge">✨ CHAPTER 21 • SEPTEMBER 6, 2026 ✨</span>
+          <h1 id="hero-heading" class="hero-heading font-serif gradient-text-hero">Happy Birthday, Aditi!</h1>
+          <p id="hero-tagline" class="hero-tagline font-serif">Today is all about celebrating the wonderful human you are.</p>
+          <p id="hero-dedication" class="hero-dedication font-script">To Billie from Billoute — with endless love & laughter.</p>
+          
+          <div class="hero-divider"></div>
+          
+          <p id="hero-message" class="hero-message">
+            Some friendships happen by chance, but staying this close and sharing so much of life is something I treasure every single day. From the wildest laughs that made our stomachs ache to the quiet, honest conversations when everything felt overwhelming — you've been my constant anchor and my favorite partner-in-crime.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 3: POLAROID MEMORY WALL -->
+    <section id="chapter-memories" class="chapter-section">
+      <div class="container">
+        <header class="section-header scroll-reveal">
+          <span class="section-badge">Captured Moments</span>
+          <h2 class="section-title font-serif gradient-text-hero">Little Moments, Big Memories</h2>
+          <p class="section-subtitle">Click any polaroid to step back into the memory.</p>
+        </header>
+
+        <div id="polaroid-grid" class="polaroid-grid">
+          <!-- Dynamic Polaroid Cards Injected via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 4: HER JOURNEY TIMELINE -->
+    <section id="chapter-timeline" class="chapter-section">
+      <div class="container">
+        <header class="section-header scroll-reveal">
+          <span class="section-badge">The Chapters of You</span>
+          <h2 class="section-title font-serif gradient-text-gold">Your Journey</h2>
+          <p class="section-subtitle">From the moment the world got brighter to turning 21 today.</p>
+        </header>
+
+        <div class="timeline-wrapper">
+          <div class="timeline-line"></div>
+          <div id="timeline-container">
+            <!-- Dynamic Timeline Nodes Injected via app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 5: THINGS I ADMIRE ABOUT YOU -->
+    <section id="chapter-admirations" class="chapter-section">
+      <div class="container">
+        <header class="section-header scroll-reveal">
+          <span class="section-badge">From My Perspective</span>
+          <h2 class="section-title font-serif gradient-text-hero">Things I Admire About You</h2>
+          <p class="section-subtitle">The qualities that make you so deeply appreciated every single day.</p>
+        </header>
+
+        <div id="admirations-grid" class="admirations-grid">
+          <!-- Dynamic Admiration Cards Injected via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 6: DIGITAL WAX-SEAL HANDWRITTEN LETTER -->
+    <section id="chapter-letter" class="chapter-section">
+      <div class="container">
+        <header class="section-header scroll-reveal">
+          <span class="section-badge">Personal Letter</span>
+          <h2 class="section-title font-serif gradient-text-hero">A Little Something From My Heart...</h2>
+          <p class="section-subtitle">Break the seal to unfold the letter.</p>
+        </header>
+
+        <div class="letter-section-wrapper scroll-reveal">
+          <div class="letter-envelope glass-panel">
+            
+            <div class="wax-seal-container">
+              <button id="wax-seal-btn" class="wax-seal-button pulse-glow" aria-label="Break wax seal and open letter">
+                <span id="letter-seal-text" class="seal-monogram">B & B</span>
+              </button>
+              <div id="seal-open-prompt" class="seal-prompt">Tap the seal to open ✦</div>
+            </div>
+
+            <div id="digital-letter-wrapper" class="digital-letter-wrapper">
+              <article class="letter-parchment">
+                <div id="letter-date" class="letter-date font-serif">September 6, 2026</div>
+                <h3 id="letter-recipient" class="letter-recipient">Dearest Ishaa (Billie),</h3>
+                
+                <div id="letter-paragraphs">
+                  <!-- Dynamic letter paragraphs injected via app.js -->
+                </div>
+
+                <div id="letter-closing" class="letter-closing">Forever and always,</div>
+                <div id="letter-signature" class="letter-signature">— Mani (Billoute)</div>
+              </article>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 7: MEMORY VAULT (INTERACTIVE FLIP CARDS) -->
+    <section id="chapter-vault" class="chapter-section">
+      <div class="container">
+        <header class="section-header scroll-reveal">
+          <span class="section-badge">Top Secret Archives</span>
+          <h2 class="section-title font-serif gradient-text-gold">The Memory Vault</h2>
+          <p class="section-subtitle">Click each secret card to uncover hidden moments and inside jokes.</p>
+        </header>
+
+        <div id="vault-grid" class="vault-grid">
+          <!-- Dynamic Vault Cards Injected via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 8: SCIENTIFIC FRIENDSHIP ANALYSIS -->
+    <section id="chapter-stats" class="chapter-section">
+      <div class="container">
+        <header class="section-header scroll-reveal">
+          <span class="section-badge">Verified Statistics</span>
+          <h2 id="stats-title" class="section-title font-serif gradient-text-hero">A Very Serious Scientific Analysis...</h2>
+          <p id="stats-subtitle" class="section-subtitle">Peer-reviewed data collected over years of friendship.</p>
+        </header>
+
+        <div id="stats-grid" class="stats-grid">
+          <!-- Dynamic Stat Cards Injected via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 9: FUTURE WISHES -->
+    <section id="chapter-wishes" class="chapter-section">
+      <div class="container">
+        <header class="section-header scroll-reveal">
+          <span class="section-badge">Looking Ahead</span>
+          <h2 class="section-title font-serif gradient-text-gold">For The Year Ahead...</h2>
+          <p class="section-subtitle">May your 21st year be your most extraordinary chapter yet.</p>
+        </header>
+
+        <div id="wishes-grid" class="wishes-grid">
+          <!-- Dynamic Wish Cards Injected via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 10: GRAND FINALE & COLLAGE -->
+    <section id="chapter-finale" class="chapter-section finale-wrapper">
+      <div class="container">
+        <div class="finale-suspense-box scroll-reveal">
+          <p id="finale-suspense-1" class="finale-suspense-line">Wait... there's just one more thing.</p>
+          <p id="finale-suspense-2" class="finale-suspense-line">I couldn't fit everything I wanted to say into one page...</p>
+        </div>
+
+        <div class="scroll-reveal">
+          <h2 id="finale-big-reveal" class="finale-big-reveal font-serif gradient-text-hero">Thank You For Being YOU.</h2>
+          <h3 id="finale-birthday-name" class="finale-birthday-name font-serif gradient-text-gold">Happy 21st Birthday, Aditi! ❤️</h3>
+          
+          <button id="finale-celebrate-btn" class="btn-finale-celebrate pulse-glow">
+            <span>🎉 Celebrate Ishaa!</span>
+          </button>
+        </div>
+
+        <!-- Floating Animated Memory Collage -->
+        <div id="finale-collage-wrapper" class="finale-collage-wrapper scroll-reveal">
+          <!-- Collage photos injected via app.js -->
+        </div>
+
+        <p id="finale-collage-quote" class="finale-collage-quote">More memories. More laughter. More adventures.</p>
+        <p id="finale-collage-sub" class="finale-collage-sub">This is only the beginning.</p>
+      </div>
+    </section>
+
+    <!-- SITE FOOTER -->
+    <footer class="site-footer">
+      <div class="container">
+        <p class="footer-text">Crafted with all the love and thought in the universe for Aditi (Ishaa).</p>
+        <p class="footer-signoff">To Billie from Billoute, always.</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- SECRET EASTER EGG FLOATING PIN -->
+  <button id="easter-egg-trigger" class="easter-egg-pin" title="Psst... click here!" aria-label="Secret message">
+    ✦
+  </button>
+
+  <!-- ====================================================================
+       MODALS
+       ==================================================================== -->
+  
+  <!-- 1. Polaroid Lightbox Modal -->
+  <div id="memory-lightbox-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Memory details">
+    <div class="lightbox-content glass-panel">
+      <button id="lightbox-close-btn" class="modal-close-btn" aria-label="Close modal">✕</button>
+      <div class="lightbox-media">
+        <img id="lightbox-img" src="" alt="Memory preview" class="lightbox-img" />
+      </div>
+      <div class="lightbox-details">
+        <span id="lightbox-tag" class="lightbox-tag">Core Memory</span>
+        <span id="lightbox-date" class="lightbox-date">Date</span>
+        <h3 id="lightbox-title" class="lightbox-title">Title</h3>
+        <p id="lightbox-caption" class="lightbox-caption">Caption</p>
+        <p id="lightbox-story" class="lightbox-story">Expanded story...</p>
+        
+        <button id="lightbox-heart-btn" class="lightbox-heart-btn">
+          <span>❤️ Love this memory</span>
+          <span id="lightbox-heart-count">21</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Secret Easter Egg Modal -->
+  <div id="easter-egg-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Secret message unlocked">
+    <div class="easter-egg-box glass-panel">
+      <button id="easter-egg-close" class="modal-close-btn" aria-label="Close modal">✕</button>
+      <div style="font-size: 2.8rem; margin-bottom: 12px;">🤫✨</div>
+      <h3 id="easter-egg-title" class="easter-egg-title">Secret Note Unlocked!</h3>
+      <p id="easter-egg-msg" class="easter-egg-msg">
+        P.S. You're officially stuck with me for at least the next 80 years. No refunds, no exchanges, and absolutely no cancellations! 😌❤️
+      </p>
+      <p id="easter-egg-signoff" class="easter-egg-signoff">— To Billie from Billoute, always.</p>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/config.js"></script>
+  <script src="js/starfield.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
